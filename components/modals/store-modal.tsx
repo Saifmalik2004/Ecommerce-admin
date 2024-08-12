@@ -40,10 +40,9 @@ export const StoreModal = () => {
     try {
         const response = await axios.post('/api/stores', values);
         console.log(response.data);
-        // Show success toast
-        toast.success('Store created successfully!');
-        // Close modal or handle success response
-        storeModal.onClose();
+       
+        window.location.assign(`/${response.data.id}`)
+        
     } catch (error) {
         console.error('Error creating store:', error);
         // Show error toast

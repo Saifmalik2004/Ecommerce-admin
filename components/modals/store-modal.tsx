@@ -57,9 +57,9 @@ export const StoreModal = () => {
       title="Create Store"
       description="Add anew store to manage product and categories"
       isOpen={storeModal.isOpen}
-      onClose={() => {
-        storeModal.onClose;
-      }}
+      onClose={
+        storeModal.onClose
+      }
     >
       
       <div>
@@ -80,7 +80,9 @@ export const StoreModal = () => {
                     )}
                     />
                     <div className="pt-6 space-x-2 flex items-center justify-end w-full">
-                    <Button disabled={loading} variant="outline" onClick={storeModal.onClose}>Cancel</Button>
+                    <Button disabled={loading} variant="outline" onClick={storeModal.onClose}>
+                    Cancel
+                 </Button>
                     <Button disabled={loading} type="submit">Submit</Button>
 
                     </div>

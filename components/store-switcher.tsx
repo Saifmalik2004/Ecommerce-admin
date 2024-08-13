@@ -47,9 +47,10 @@ function Storewitcher({
             aria-label='select a store'
             className={cn("w-[200px] justify-between" ,className)}
             >
+                <StoreIcon className='mr-2 h-4 w-4'/>
                 {currentStore?.label}
                 <ChevronsUpDown className='ml-auto'/>
-             <StoreIcon className='mr-2 h-4 w-4'/>
+             
             </Button>
          </PopoverTrigger>
          <PopoverContent  className='w-[200px] p-0'>

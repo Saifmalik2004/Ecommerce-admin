@@ -21,7 +21,7 @@ model Billboard {
   storeId   String     @db.ObjectId
   store     Store      @relation("StoreToBillboard", fields: [storeId], references: [id])
   label     String
-  imagUrl   String
+  imageUrl   String
   createdAt DateTime   @default(now()) @map("createdAt")
   updatedAt DateTime   @updatedAt @map("updatedAt")
 

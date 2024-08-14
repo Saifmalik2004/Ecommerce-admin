@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 
     // Check if the user is authenticated
     if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse("Unauthenticated", { status: 401 });
     }
 
     // Validate the name field

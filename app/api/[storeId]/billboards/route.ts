@@ -69,17 +69,18 @@ export async function GET(
       return new NextResponse("store is required", { status: 401 });
     }
 
-const billboards = await prismadb.billboard.findFirst({
+const billboards = await prismadb.billboard.findMany({
   where:{
     storeId:params.storeId,
     
   }
 })
+
     // Return the newly created store as the response
     return NextResponse.json(billboards);
 
   } catch (error) {
-    console.log('[BILLBOARDS_POST]', error);
+    console.log('[BILLBOARDS_GET]', error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }

@@ -12,8 +12,8 @@ const CategoryPage = async ({
       storeId:params.storeid
     }
   })
-  // Check if billboardId is "new" and handle accordingly
-  if (categoryId === "new") {
+  // Check if category is "new" and handle accordingly
+  if (!categoryId || categoryId === "new" || categoryId === "undefined") {
     
     // Render form with initial data as null for a new entry
     return (

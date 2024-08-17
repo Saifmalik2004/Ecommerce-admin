@@ -1,15 +1,15 @@
 import prismadb from '@/lib/prismadb';
-import Sizeform from './components/size-form';
+import Sizeform from '../[colorId]/components/size-form';
 
-const SizePage = async ({
+const ColorPage = async ({
   params
 }: {
-  params: { sizeId: string }
+  params: { colorId: string }
 }) => {
-  const sizeId = decodeURIComponent(params.sizeId);
+  const colorId = decodeURIComponent(params.colorId);
 
-  // Check if billboardId is "new" and handle accordingly
-  if (sizeId === "new") {
+  // Check if colorID is "new" and handle accordingly
+  if (colorId === "new") {
     // Render form with initial data as null for a new entry
     return (
       <div className="flex-col">
@@ -21,11 +21,11 @@ const SizePage = async ({
   }
 
   // Proceed with the query if the ID is not "new"
-  let size = null;
+  let color = null;
   try {
-    size = await prismadb.size.findUnique({
+    color = await prismadb.color.findUnique({
       where: {
-        id: params.sizeId
+        id: params.colorId
       }
     });
   } catch (error) {
@@ -36,10 +36,10 @@ const SizePage = async ({
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8">
-        <Sizeform initialData={size} />
+        <Sizeform initialData={color} />
       </div>
     </div>
   );
 };
 
-export default SizePage;
+export default ColorPage;

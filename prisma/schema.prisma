@@ -13,7 +13,8 @@ model Store {
   userId     String
   billboards Billboard[] @relation("StoreToBillboard")
   categories Category[] @relation("StoreToCategory")
-  size     Size[]     @relation("StoreToSize")
+  sizes     Size[]     @relation("StoreToSize")
+  colors     Color[]     @relation("StoreToColor")
   createdAt  DateTime    @default(now()) @map("createdAt")
   updatedAt  DateTime    @updatedAt @map("updatedAt")
 }
@@ -46,6 +47,17 @@ model Size {
   id  String  @id @default(auto()) @map("_id") @db.ObjectId
   storeId     String     @db.ObjectId
   store       Store      @relation("StoreToSize", fields: [storeId], references: [id])
+  name        String
+  value       String
+  createdAt   DateTime   @default(now()) @map("createdAt")
+  updatedAt   DateTime   @updatedAt @map("updatedAt")
+}
+
+
+model Color {
+  id  String  @id @default(auto()) @map("_id") @db.ObjectId
+  storeId     String     @db.ObjectId
+  store       Store      @relation("StoreToColor", fields: [storeId], references: [id])
   name        String
   value       String
   createdAt   DateTime   @default(now()) @map("createdAt")

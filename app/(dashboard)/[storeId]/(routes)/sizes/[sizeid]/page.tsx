@@ -1,21 +1,20 @@
 import prismadb from '@/lib/prismadb';
-import SizeForm from './components/size-form';
+import Sizeform from './components/size-form';
 
 const SizePage = async ({
   params
 }: {
-  params: { SizeId: string }
+  params: { sizeId: string }
 }) => {
-  const SizeId = decodeURIComponent(params.SizeId);
+  const billboardId = decodeURIComponent(params.sizeId);
 
-  // Check if sizeId is "new" and handle accordingly
-  // Decode the SizeId and handle undefined or invalid cases
-  if (!SizeId || SizeId === "new" || SizeId === "undefined") {
+  // Check if billboardId is "new" and handle accordingly
+  if (billboardId === "new") {
     // Render form with initial data as null for a new entry
     return (
       <div className="flex-col">
         <div className="flex-1 space-y-4 p-8">
-          <SizeForm initialData={null} />
+          <Sizeform initialData={null} />
         </div>
       </div>
     );
@@ -26,18 +25,18 @@ const SizePage = async ({
   try {
     size = await prismadb.size.findUnique({
       where: {
-        id: SizeId
+        id: params.sizeId
       }
     });
   } catch (error) {
     // Handle potential errors from Prisma
-    console.error("Error fetching size:", error);
+    console.error("Error fetching billboard:", error);
   }
 
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8">
-        <SizeForm initialData={size} />
+        <Sizeform initialData={size} />
       </div>
     </div>
   );

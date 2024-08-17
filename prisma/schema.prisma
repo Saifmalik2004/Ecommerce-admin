@@ -15,6 +15,7 @@ model Store {
   categories Category[] @relation("StoreToCategory")
   sizes     Size[]     @relation("StoreToSize")
   colors     Color[]     @relation("StoreToColor")
+  products   Product[]      @relation("StoreToProduct")
   createdAt  DateTime    @default(now()) @map("createdAt")
   updatedAt  DateTime    @updatedAt @map("updatedAt")
 }
@@ -37,6 +38,7 @@ model Category{
   store       Store      @relation("StoreToCategory", fields: [storeId], references: [id])
   billboardId String     @db.ObjectId
   billboard   Billboard  @relation( fields: [billboardId], references: [id])
+  products    Product[]   @relation("CategoryToProduct")
   name        String
   createdAt   DateTime   @default(now()) @map("createdAt")
   updatedAt   DateTime   @updatedAt @map("updatedAt")
@@ -49,6 +51,7 @@ model Size {
   store       Store      @relation("StoreToSize", fields: [storeId], references: [id])
   name        String
   value       String
+  products    Product[]
   createdAt   DateTime   @default(now()) @map("createdAt")
   updatedAt   DateTime   @updatedAt @map("updatedAt")
 }
@@ -60,6 +63,49 @@ model Color {
   store       Store      @relation("StoreToColor", fields: [storeId], references: [id])
   name        String
   value       String
+  products    Product[]
   createdAt   DateTime   @default(now()) @map("createdAt")
   updatedAt   DateTime   @updatedAt @map("updatedAt")
+}
+
+model Product {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  storeId     String    @db.ObjectId
+  store       Store     @relation("StoreToProduct", fields: [storeId], references: [id])
+  categoryId  String    @db.ObjectId
+  category    Category  @relation("CategoryToProduct", fields: [categoryId], references: [id])
+  name        String
+  price       Float
+  sizeId      String    @db.ObjectId
+  size        Size      @relation(fields: [sizeId], references: [id])
+  colorId     String    @db.ObjectId
+  color       Color     @relation(fields: [colorId], references: [id])
+  images      Image[]
+  description String
+  reviews     Review[]  // Added connection to reviews
+  createdAt   DateTime  @default(now()) @map("createdAt")
+  updatedAt   DateTime  @updatedAt @map("updatedAt")
+}
+
+
+model Image{
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  productId String @db.ObjectId
+  product   Product  @relation( fields: [productId],references: [id],onDelete:Cascade)
+  url       String
+  createdAt DateTime @default(now()) @map("createdAt")
+  updatedAt DateTime @updatedAt @map("updatedAt")
+
+}
+
+
+model Review {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  productId String   @db.ObjectId
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId    String   // Clerk user ID
+  rating    Int      // Rating field (1-5)
+  comment   String   // Comment field
+  createdAt DateTime @default(now()) @map("createdAt")
+  updatedAt DateTime @updatedAt @map("updatedAt")
 }

@@ -21,11 +21,13 @@ import ImageUpload from "@/components/ui/image-upload";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import CategoriesPage from "../../../categories/page";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema =z.object({
     name :z.string().min(1),
     images:z.object({url:z.string()}).array(),
     price:z.coerce.number().min(1),
+    description: z.string().min(10).max(1000),
     categoryId:z.string().min(1),
     colorId:z.string().min(1),
     sizeId:z.string().min(1),
@@ -72,6 +74,7 @@ export const ProductForm: React.FC<ProductFormProps>=({
             categoryId:'',
             colorId:'',
             sizeId:'',
+            description:'',
             isFeatured:false,
             isArchived:false,
 
@@ -93,6 +96,7 @@ export const ProductForm: React.FC<ProductFormProps>=({
            toast.success(toastMessage)
             
         } catch (error) {
+            console.log('error in f',error)
             toast.error("Something went wrong.")
         }finally{
             setLoading(false);
@@ -337,7 +341,25 @@ export const ProductForm: React.FC<ProductFormProps>=({
                 )}
                 />
 
+
             </div>
+            <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem className="">
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        disabled={loading}
+                        placeholder="Product Description"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             <Button disabled={loading} className="ml-auto" type="submit">
               {action}
             </Button>

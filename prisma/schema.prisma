@@ -76,6 +76,8 @@ model Product {
   category    Category  @relation("CategoryToProduct", fields: [categoryId], references: [id])
   name        String
   price       Float
+  isFeatured  Boolean @default(false)
+  isArchived  Boolean @default(false)
   sizeId      String    @db.ObjectId
   size        Size      @relation(fields: [sizeId], references: [id])
   colorId     String    @db.ObjectId

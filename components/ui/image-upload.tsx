@@ -27,6 +27,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
   const handleSuccess = (result: any) => {
     onChange(result.info.secure_url);
+    console.log("iamges",result.info.secure_url)
   };
 
   

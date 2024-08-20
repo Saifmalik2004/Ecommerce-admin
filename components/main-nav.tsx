@@ -14,7 +14,7 @@ function MainNav({
         
         {
             href:`/${params.storeId}`,
-            label:'Store',
+            label:'Overview',
             active: pathname === `/${params.storeId}`,
         },
         {

@@ -18,7 +18,7 @@ export const CellAction:React.FC<CellActionProps> = ({
 })=>{
     const router = useRouter()
     const params = useParams()
-
+    console.log("is this",data.id)
     const [laoding, setLoading] = useState(false);
     const [open, setOpen] = useState(false)
     const onCopy = (id:string)=>{

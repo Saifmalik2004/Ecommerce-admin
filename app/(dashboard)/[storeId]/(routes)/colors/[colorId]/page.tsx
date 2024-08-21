@@ -1,5 +1,5 @@
 import prismadb from '@/lib/prismadb';
-import Sizeform from './components/color-form';
+import ColorForm from './components/color-form';
 
 const ColorPage = async ({
   params
@@ -14,7 +14,7 @@ const ColorPage = async ({
     return (
       <div className="flex-col">
         <div className="flex-1 space-y-4 p-8">
-          <Sizeform initialData={null} />
+          <ColorForm initialData={null} />
         </div>
       </div>
     );
@@ -36,7 +36,7 @@ const ColorPage = async ({
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8">
-        <Sizeform initialData={color} />
+        <ColorForm initialData={color} />
       </div>
     </div>
   );

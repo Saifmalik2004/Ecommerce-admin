@@ -32,7 +32,7 @@ interface ColorFormProps{
     initialData: Color | null;
 }
 
-export const SizeForm: React.FC<ColorFormProps>=({
+export const ColorForm: React.FC<ColorFormProps>=({
     initialData
 })=> {
     const params=useParams();
@@ -176,4 +176,4 @@ export const SizeForm: React.FC<ColorFormProps>=({
   )
 }
 
-export default SizeForm
+export default ColorForm

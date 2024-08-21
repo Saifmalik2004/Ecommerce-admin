@@ -30,7 +30,7 @@ const SizePage = async ({
     });
   } catch (error) {
     // Handle potential errors from Prisma
-    console.error("Error fetching billboard:", error);
+    console.error("Error fetching size:", error);
   }
 
   return (

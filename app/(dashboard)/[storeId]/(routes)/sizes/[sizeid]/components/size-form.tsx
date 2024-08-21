@@ -33,6 +33,7 @@ interface SizeFormProps{
 export const SizeForm: React.FC<SizeFormProps>=({
     initialData
 })=> {
+    console.log('Initial Data:', initialData);
     const params=useParams();
     const router= useRouter();
     const [open,setOpen]= useState(false)

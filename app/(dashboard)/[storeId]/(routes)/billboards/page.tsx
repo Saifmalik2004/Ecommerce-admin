@@ -20,6 +20,7 @@ const BillboardsPage = async({
   const formattedBillboards: BillboardColumn[]=billboards.map((item)=>({
     id:item.id,
     label:item.label,
+    textColor:item.textColor,
     createdAt:format(item.createdAt,"MMMM do, yyyy")
   }))
   return (

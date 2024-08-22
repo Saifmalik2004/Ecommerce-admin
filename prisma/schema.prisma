@@ -26,12 +26,18 @@ model Billboard {
   storeId   String     @db.ObjectId
   store     Store      @relation("StoreToBillboard", fields: [storeId], references: [id])
   label     String
-  imageUrl   String
+  imageUrl  String
+  textColor TextColor  // Use an enum for textColor
   categories Category[] 
   createdAt DateTime   @default(now()) @map("createdAt")
   updatedAt DateTime   @updatedAt @map("updatedAt")
-
 }
+
+enum TextColor {
+  black
+  white
+}
+
 
 model Category{
   id  String  @id @default(auto()) @map("_id") @db.ObjectId
@@ -80,8 +86,8 @@ model Product {
   
   isFeatured  Boolean @default(false)
   isArchived  Boolean @default(false)
-  sizeId      String    @db.ObjectId
-  size        Size      @relation(fields: [sizeId], references: [id])
+ sizeId      String?   @db.ObjectId   // Make sizeId nullable
+  size        Size?     @relation(fields: [sizeId], references: [id])  
   colorId     String    @db.ObjectId
   color       Color     @relation(fields: [colorId], references: [id])
   images      Image[]

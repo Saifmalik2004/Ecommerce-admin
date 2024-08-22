@@ -16,7 +16,7 @@ import {  useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { z } from "zod";
+import { nullable, z } from "zod";
 import ImageUpload from "@/components/ui/image-upload";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import CategoriesPage from "../../../categories/page";
@@ -30,7 +30,7 @@ const formSchema =z.object({
     description: z.string().min(10).max(1000),
     categoryId:z.string().min(1),
     colorId:z.string().min(1),
-    sizeId:z.string().min(1),
+    sizeId:z.string().nullable(), 
     isFeatured: z.boolean().default(false).optional(),
     isArchived: z.boolean().default(false).optional()
 
@@ -73,7 +73,7 @@ export const ProductForm: React.FC<ProductFormProps>=({
             price:0,
             categoryId:'',
             colorId:'',
-            sizeId:'',
+            sizeId:"",
             description:'',
             isFeatured:false,
             isArchived:false,
@@ -242,10 +242,10 @@ export const ProductForm: React.FC<ProductFormProps>=({
                         <FormLabel>
                             Size
                         </FormLabel>
-                        <Select disabled={loading} onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
+                        <Select disabled={loading} onValueChange={field.onChange} value={field.value||''} defaultValue={field.value || ''}>
                           <FormControl>
                             <SelectTrigger >
-                                <SelectValue defaultValue={field.value} placeholder='Select a size'>
+                                <SelectValue defaultValue={field.value || ""} placeholder='Select a size'>
 
                                 </SelectValue>
 

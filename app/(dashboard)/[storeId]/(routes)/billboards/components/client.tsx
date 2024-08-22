@@ -17,7 +17,7 @@ interface BillBoardClientProps{
 const BillboardClient:React.FC<BillBoardClientProps>=({
   data
 })=> {
-
+console.log("data",data)
     const router = useRouter();
     const params= useParams();
   return (

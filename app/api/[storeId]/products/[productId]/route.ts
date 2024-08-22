@@ -77,9 +77,7 @@ export async function PATCH(
               return new NextResponse("ColorId is required", { status: 400 });
             }
       
-          if (!sizeId) {
-              return new NextResponse("SizeId is required", { status: 400 });
-            }
+         
             if (!description) {
               return new NextResponse("description is required", { status: 400 });
             }
@@ -114,7 +112,7 @@ export async function PATCH(
                     isFeatured,
                     isArchived,
                     colorId,
-                    sizeId,
+                    sizeId:sizeId||null,
                     categoryId,
                     description,
                     images:{

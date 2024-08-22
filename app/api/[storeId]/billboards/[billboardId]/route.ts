@@ -31,62 +31,67 @@ export async function GET(
 
 
 export async function PATCH(
-    req:Request,
-    {params}:{params:{storeId:string ,billboardId:string}}
-){
-    try {
-        const {userId} = auth();
-        const body = await req.json();
-        const { label,imageUrl} = body; 
+  req: Request,
+  { params }: { params: { storeId: string; billboardId: string } }
+) {
+  try {
+    const { userId } = auth(); // Authenticate the user
+    const body = await req.json();
+    const { label, imageUrl, textColor } = body;
 
-          if (!userId) {
-            return new NextResponse("Unauthenticated", { status: 401 });
-          }
-
-          if (!label) {
-            return new NextResponse("label is required", { status: 400 });
-          }
-          
-          if (!imageUrl) {
-            return new NextResponse("imageurl is required", { status: 400 });
-          }
-
-          if (!params.storeId) {
-            return new NextResponse("Store Id is required", { status: 400 });
-          }
-          if (!params.billboardId) {
-            return new NextResponse("Store Id is required", { status: 400 });
-          }
-
-          const storeByUserId = await prismadb.store.findFirst({
-            where:{
-              id:params.storeId,
-              userId
-            }
-          })
-          
-          if (!storeByUserId) {
-              return new NextResponse("Unauthorized", { status: 403 });
-            }
-
-          const billboard = await prismadb.billboard.updateMany({
-            where:{
-                id:params.billboardId,
-                
-            },
-            data:{
-               label,
-               imageUrl
-            }
-          });
-
-
-          return NextResponse.json(billboard);
-
-    } catch (error) {
-        console.log('[BILLBOARD_PATCH]', error);
-    return new NextResponse("Internal error", { status: 500 });
+    // Check if the user is authenticated
+    if (!userId) {
+      return new NextResponse("Unauthenticated", { status: 401 });
     }
+
+    // Validate required fields
+    if (!label) {
+      return new NextResponse("Label is required", { status: 400 });
+    }
+    if (!imageUrl) {
+      return new NextResponse("Image URL is required", { status: 400 });
+    }
+    if (!textColor) {
+      return new NextResponse("Text color is required", { status: 400 });
+    }
+    if (!params.storeId) {
+      return new NextResponse("Store ID is required", { status: 400 });
+    }
+    if (!params.billboardId) {
+      return new NextResponse("Billboard ID is required", { status: 400 });
+    }
+
+    // Validate store ownership
+    const storeByUserId = await prismadb.store.findFirst({
+      where: {
+        id: params.storeId,
+        userId,
+      },
+    });
+
+    if (!storeByUserId) {
+      return new NextResponse("Unauthorized", { status: 403 });
+    }
+
+    // Update the billboard
+    const billboard = await prismadb.billboard.update({
+      where: {
+        id: params.billboardId,
+      },
+      data: {
+        label,
+        imageUrl,
+        textColor, // Include text color in the update
+      },
+    });
+
+    // Return the updated billboard
+    return NextResponse.json(billboard);
+
+  } catch (error) {
+    console.log('[BILLBOARD_PATCH]', error);
+    return new NextResponse("Internal error", { status: 500 });
+  }
 }
 
 

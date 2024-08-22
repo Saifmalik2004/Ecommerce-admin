@@ -8,7 +8,7 @@ const SizePage = async ({
 }) => {
  
   const sizeId = decodeURIComponent(params.sizeId);
-  console.log('paramsid',sizeId)
+
   // Check if billboardId is "new" and handle accordingly
   if (sizeId === "new") {
     // Render form with initial data as null for a new entry

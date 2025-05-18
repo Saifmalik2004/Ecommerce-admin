@@ -17,10 +17,22 @@ model Store {
   colors     Color[]     @relation("StoreToColor")
   products   Product[]      @relation("StoreToProduct")
   orders     Order[]        @relation("StoreToOrder")
+  contactSubmissions ContactSubmission[] @relation("StoreToContactSubmission")
   createdAt  DateTime    @default(now()) @map("createdAt")
   updatedAt  DateTime    @updatedAt @map("updatedAt")
 }
-
+model ContactSubmission {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  storeId   String   @db.ObjectId
+  store     Store    @relation("StoreToContactSubmission", fields: [storeId], references: [id])
+  name      String
+  email     String
+  subject   String
+  message   String
+  userId    String?  // Optional userId (nullable for non-logged-in users)
+  createdAt DateTime @default(now()) @map("createdAt")
+  updatedAt DateTime @updatedAt @map("updatedAt")
+}
 model Billboard {
   id        String     @id @default(auto()) @map("_id") @db.ObjectId
   storeId   String     @db.ObjectId
@@ -145,3 +157,4 @@ model OrderItem{
   
 
 }
+
